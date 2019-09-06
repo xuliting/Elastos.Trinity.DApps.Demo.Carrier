@@ -1,0 +1,36 @@
+{
+    "id": "org.elastos.trinity.demo.carrier",
+    "version": "1.0.0",
+    "name": "CarrierDemo",
+    "short_name": "CarrierDemo",
+    "description": "Elastos Carrier Demo",
+    "start_url": "index.html",
+    "icons": [
+      {
+          "src": "assets/images/logo.png",
+          "sizes": "120X120",
+          "type": "image/png"
+      }
+    ],
+    "author": {
+        "name": "trinity",
+        "email": ""
+    },
+    "default_locale": "en",
+    "plugins": [
+        "CarrierPlugin",
+        "QRScanner",
+        "Clipboard"
+    ],
+    "urls": [
+        "https://www.google.com"
+    ],
+    "framework": [
+        "ionic@4.12.0"
+    ],
+    "platform": [
+        "andriod",
+        "ios"
+    ]
+}
+

@@ -24,3 +24,56 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+
+@import "./app/functions.scss";
+
+
+.my-custom-alert {
+    --ion-text-color: #000000;
+    text-align: center;
+}
+
+ion-button {
+    text-transform: none;
+}
+
+ion-item {
+    --padding-start: 0;
+    --inner-padding-end:0;
+    margin-left: px2rem(45px);
+    margin-right: px2rem(45px);
+}
+
+ion-note {
+    font-size: 14px;
+}
+
+// ion-icon {
+//     width: px2rem(64px);
+//     height: px2rem(64px);
+// }
+
+ion-footer {
+    text-align: center;
+}
+
+.confirm {
+    width: px2rem(686px);
+    height: px2rem(84px);
+    --background: #783aff;
+    font-size: 16px;
+}
+
+.delete {
+    width: px2rem(686px);
+    height: px2rem(84px);
+    --background: #AB2323;
+    font-size: 16px;
+}
+
+.line-limit-length {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

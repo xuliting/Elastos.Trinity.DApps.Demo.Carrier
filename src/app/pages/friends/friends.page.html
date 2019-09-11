@@ -4,6 +4,10 @@
 </ion-header>
 
 <ion-content>
+    <div class="warning-content" *ngIf=" status != 0 ">
+        <ion-label>disconnect</ion-label>
+    </div>
+
     <ion-toolbar>
         <ion-buttons slot="end">
             <ion-button  fill="clear" (click)="addFriend()">
@@ -29,7 +33,8 @@
             </ion-avatar>
             <ion-label>
               <h2>{{ (item.name == null) || (item.name == "") ? item.userId : item.name }}</h2>
-              <p>{{item.status == 0 ? 'online' : 'offline'}}</p>
+              <ion-note color="danger" *ngIf="item.status != 0"> offline </ion-note>
+              <ion-note color="success" *ngIf="item.status == 0"> online </ion-note>
             </ion-label>
         </ion-item>
         <ion-item-options slide="start">

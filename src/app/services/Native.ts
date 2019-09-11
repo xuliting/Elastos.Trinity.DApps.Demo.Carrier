@@ -47,7 +47,6 @@ export class Native {
     }
 
     public toast(_message: string = 'Operation completed', duration: number = 2000): void {
-        //this.toast.show(message, String(duration), 'bottom').subscribe();
         this.toastCtrl.create({
             message: _message,
             duration: 2000,
@@ -56,7 +55,6 @@ export class Native {
     }
 
     public toast_trans(_message: string = '', duration: number = 2000): void {
-        //this.toast.show(message, String(duration), 'bottom').subscribe();
         _message = this.translate.instant(_message);
         this.toastCtrl.create({
             message: _message,
@@ -70,9 +68,7 @@ export class Native {
     }
 
     public go(page: any, options: any = {}) {
-        console.log(options);
         this.router.navigate([page], { queryParams: options });
-        // this.navCtrl.navigateForward(page, options);
     }
 
     public pop() {

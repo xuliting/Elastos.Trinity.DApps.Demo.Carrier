@@ -15,6 +15,7 @@ export class ChatPage {
     myId = '';
     friendId = '';
     editorMsg = '';
+    status = 1;
 
     constructor(
             private route: ActivatedRoute,
@@ -25,13 +26,23 @@ export class ChatPage {
             private popupProvider: PopupProvider,
             private native: Native) {
         this.route.queryParams.subscribe((data) => {
-            this.friendId = data["userId"];
+            this.friendId = data.userId;
+            this.status = data.status;
             this.myId = this.carrierManager.getUserId();
             console.log("friendId:" + this.friendId);
         });
     }
 
     ngOnInit() {
+        this.event.subscribe('carrier:friend_connection', msg => {
+            console.log("carrier:friend_connection friendId:" + msg.friendId + "  status:" + msg.status);
+            if (msg.friendId == this.friendId) {
+                this.zone.run(() => {
+                    this.status = msg.status;
+                });
+            }
+        });
+
         this.event.subscribe('carrier:message', msg => {
             console.log("carrier:message friendId:" + msg.from + "  message:" + msg.message);
 

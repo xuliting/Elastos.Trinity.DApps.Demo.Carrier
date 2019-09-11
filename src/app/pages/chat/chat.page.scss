@@ -1,7 +1,16 @@
 @import "../../functions.scss";
 
 
-$userBackgroundColor: #387ef5;
+$userBackgroundColor: #33cc33;
+
+
+.warning-content {
+  background-color:#f00;
+  color: #fff;
+  text-align: center;
+  font-size: 18px;
+  padding: px2rem(2px);
+}
 
 ion-content .scroll-content {
   background-color: #f5f5f5;
@@ -19,12 +28,16 @@ ion-footer {
 .input-wrap {
   padding: px2rem(5px);
   display: flex;
+  font-size: 18px;
   textarea {
     flex: 1;
     padding-top: px2rem(5px);
     border: 0;
     border-bottom: px2rem(1px) $userBackgroundColor;
     border-style: solid;
+  }
+  ion-icon {
+    width: px2rem(60px);
   }
 }
 
@@ -34,6 +47,7 @@ ion-footer {
     position: relative;
     padding: px2rem(7px) 0;
     .user-img {
+      margin-top: px2rem(36px);
       position: absolute;
       border-radius: px2rem(45px);
       width: px2rem(45px);
@@ -58,11 +72,12 @@ ion-footer {
         position: relative;
         margin-top: px2rem(5px);
         border-radius: px2rem(5px);
-        padding: px2rem(8px);
+        padding: px2rem(16px);
         border: 1px solid #ddd;
         color: #000000;
         width: auto;
         max-width: 80%;
+        font-size: 18px;
         span.triangle {
           background-color: #fff;
           border-radius: px2rem(2px);

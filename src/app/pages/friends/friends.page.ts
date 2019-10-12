@@ -1,5 +1,5 @@
 import { Component, NgZone } from '@angular/core';
-import { AlertController, Events, Platform } from '@ionic/angular';
+import { Events, Platform } from '@ionic/angular';
 import { Native } from '../../services/Native';
 import { CarrierManager } from '../../services/CarrierManager';
 import { PopupProvider } from '../../services/popup';
@@ -17,9 +17,9 @@ export class FriendsPage {
     status = 0;
 
     constructor(
-            private alertCtrl: AlertController,
             private event: Events,
-            private platform: Platform, private zone: NgZone,
+            private platform: Platform,
+            private zone: NgZone,
             private popupProvider: PopupProvider,
             private native: Native,
             private carrierManager: CarrierManager) {

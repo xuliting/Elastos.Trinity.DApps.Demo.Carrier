@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AlertController, Platform } from '@ionic/angular';
+import { Platform } from '@ionic/angular';
 import { Native } from '../../../services/Native';
 import { CarrierManager } from '../../../services/CarrierManager';
 
@@ -18,7 +18,6 @@ export class AddFriendPage {
 
     constructor(
             private route: ActivatedRoute,
-            private alertCtrl: AlertController,
             private platform: Platform,
             private native: Native,
             private carrierManager: CarrierManager) {

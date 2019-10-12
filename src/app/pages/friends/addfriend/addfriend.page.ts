@@ -12,9 +12,8 @@ import { CarrierManager } from '../../../services/CarrierManager';
 export class AddFriendPage {
 
     private items = [{'online':true, 'label':'label', 'uid':'uid'}, {'online':false, 'label':'label', 'uid':'uid'}];
-    private scannedCode: string = "";
-    private address: string = "";
-    private friendRequest: string = "Hello";
+    address: string = "";
+    friendRequest: string = "Hello";
 
     constructor(
             private route: ActivatedRoute,

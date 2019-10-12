@@ -1,17 +1,17 @@
 {
-    "id": "org.elastos.trinity.demo.carrier",
+    "id": "org.elastos.trinity.dapp.carrierdemo",
     "version": "1.0.0",
-    "version_code": 1,
+    "version_code": 100,
     "name": "CarrierDemo",
     "short_name": "CarrierDemo",
     "description": "Elastos Carrier Demo",
     "start_url": "index.html",
     "icons": [
-      {
-          "src": "assets/images/logo.png",
-          "sizes": "120X120",
-          "type": "image/png"
-      }
+        {
+            "src": "assets/images/logo.png",
+            "sizes": "120X120",
+            "type": "image/png"
+        }
     ],
     "author": {
         "name": "trinity",
@@ -23,6 +23,7 @@
         "QRScanner",
         "Clipboard"
     ],
+    "urls": [],
     "framework": [
         "ionic@4.12.0"
     ],

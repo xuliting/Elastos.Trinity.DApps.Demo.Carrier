@@ -12,7 +12,6 @@ import { PopupProvider } from '../../services/popup';
 export class FriendsPage {
 
     public friends = [{'status':1, 'name':'', 'userId':'1000'}, {'status':0, 'name':'Tom', 'userId':'1001'}];
-    private scannedCode: string = "";
     public friendList = [];
     status = 0;
 

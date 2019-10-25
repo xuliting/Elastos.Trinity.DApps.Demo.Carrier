@@ -2,8 +2,8 @@
     "id": "org.elastos.trinity.dapp.carrierdemo",
     "version": "1.0.0",
     "version_code": 100,
-    "name": "CarrierDemo",
-    "short_name": "CarrierDemo",
+    "name": "Carrier Demo",
+    "short_name": "Carrier Demo",
     "description": "Elastos Carrier Demo",
     "start_url": "index.html",
     "icons": [

@@ -3,7 +3,7 @@ import { Events, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { Native } from './Native';
 
-declare let appService: any;
+declare let appManager: any;
 let myService = null;
 
 enum MessageType {
@@ -42,7 +42,7 @@ export class AppService {
         if (this.platform.is("desktop")) return; //for test
 
         console.log("AppService init");
-        appService.setListener(this.onReceive);
+        appManager.setListener(this.onReceive);
         this.getLanguage();
     }
 
@@ -52,7 +52,7 @@ export class AppService {
 
     getLanguage() {
         var me = this;
-        appService.getLocale(
+        appManager.getLocale(
             ret => {
                 console.log(ret);
                 me.setCurLang(ret.currentLang);
@@ -79,15 +79,15 @@ export class AppService {
     }
 
     launcher() {
-        appService.launcher();
+        appManager.launcher();
     }
 
     start(id: string) {
-        appService.start(id);
+        appManager.start(id);
     }
 
     close() {
-        appService.close();
+        appManager.close();
     }
 
     onReceive(ret) {

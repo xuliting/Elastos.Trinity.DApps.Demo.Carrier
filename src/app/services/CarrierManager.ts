@@ -22,7 +22,7 @@
 
 import { Injectable } from '@angular/core';
 import { Events, Platform } from '@ionic/angular';
-import { Native } from "./Native";
+import { Native } from './Native';
 
 
 export class ChatMessage {
@@ -36,18 +36,18 @@ export class ChatMessage {
 }
 
 declare let carrierPlugin: any;
-let myCarrier = null;
-let myEvent = null;
+let carrierObj = null;
+let eventObj = null;
 let messageList: ChatMessage[] = [];
 
 @Injectable()
 export class CarrierManager {
 
-    private static s_isReady = false;
+    private static sIsReady = false;
     private myInterval: any; //for test
     private carrierPlugin;
 
-    private static opts = {
+    private opts = {
         udpEnabled: true,
         persistentLocation: ".data"
     };
@@ -69,7 +69,7 @@ export class CarrierManager {
     }
 
     constructor(public native: Native, public event: Events, public platform: Platform) {
-        myEvent = event;
+        eventObj = event;
     }
 
     init() {
@@ -78,83 +78,82 @@ export class CarrierManager {
                 this.ready_callback(null);
                 clearInterval(this.myInterval);
             }, 2000);
-        }
-        else {
+        } else {
             this.carrierPlugin = carrierPlugin;
             this.createObject(this.CarrierCreateSuccess, null);
         }
     }
 
     isReady() {
-        return CarrierManager.s_isReady;
+        return CarrierManager.sIsReady;
     }
 
     CarrierCreateSuccess(ret) {
-        myCarrier = ret;
-        myCarrier.start(null, null, 50);
+        carrierObj = ret;
+        carrierObj.start(50, null, null);
     }
 
     // callback
     connection_callback(ret) {
         console.log("connection_callback");
-        myEvent.publish('carrier:connectionchanged', ret, Date.now());
+        eventObj.publish('carrier:connectionchanged', ret, Date.now());
     }
 
     ready_callback(ret) {
         console.log("ready_callback");
-        CarrierManager.s_isReady = true;
-        myEvent.publish('carrier:ready', ret, Date.now());
+        CarrierManager.sIsReady = true;
+        eventObj.publish('carrier:ready', ret, Date.now());
     }
 
     self_info_callback(ret) {
         console.log("self_info_callback");
-        myEvent.publish('carrier:self_info', ret, Date.now());
+        eventObj.publish('carrier:self_info', ret, Date.now());
     }
 
     friend_connection_callback(ret) {
         console.log("friend_connection_callback");
-        myEvent.publish('carrier:friend_connection', ret, Date.now());
+        eventObj.publish('carrier:friend_connection', ret, Date.now());
     }
 
     friend_info_callback(ret) {
         console.log("friend_info_callback");
-        myEvent.publish('carrier:friend_info', ret, Date.now());
+        eventObj.publish('carrier:friend_info', ret, Date.now());
     }
 
     friends_list_callback(ret) {
         console.log("friends_list_callback");
-        myEvent.publish('carrier:friends_list', ret, Date.now());
+        eventObj.publish('carrier:friends_list', ret, Date.now());
     }
 
     friend_presence_callback(ret) {
         console.log("friend_presence_callback");
-        myEvent.publish('carrier:friend_presence', ret, Date.now());
+        eventObj.publish('carrier:friend_presence', ret, Date.now());
     }
 
     friend_request_callback(ret) {
         console.log("friend_request_callback");
-        myEvent.publish('carrier:friend_request', ret, Date.now());
+        eventObj.publish('carrier:friend_request', ret, Date.now());
     }
 
     friend_added_callback(ret) {
         console.log("friend_added_callback");
-        myEvent.publish('carrier:friend_added', ret, Date.now());
+        eventObj.publish('carrier:friend_added', ret, Date.now());
     }
 
     friend_removed_callback(ret) {
         console.log("friend_removed_callback");
-        myEvent.publish('carrier:friend_removed', ret, Date.now());
+        eventObj.publish('carrier:friend_removed', ret, Date.now());
     }
 
     message_callback(ret) {
         console.log("message_callback");
-        myEvent.publish('carrier:message', ret, Date.now());
+        eventObj.publish('carrier:message', ret, Date.now());
 
         let newMsg: ChatMessage = {
             messageId: Date.now().toString(),
             userId: ret.from,
             userAvatar: './assets/images/avatar.png',
-            toUserId: myCarrier.userId,
+            toUserId: carrierObj.userId,
             time: Date.now(),
             message: ret.message,
             status: 'success'
@@ -164,19 +163,19 @@ export class CarrierManager {
 
     invite_request_callback(ret) {
         console.log("invite_request_callback");
-        myEvent.publish('carrier:invite_request', ret, Date.now());
+        eventObj.publish('carrier:invite_request', ret, Date.now());
     }
 
     session_request_callback(ret) {
         console.log("session_request_callback");
-        myEvent.publish('carrier:session_request', ret, Date.now());
+        eventObj.publish('carrier:session_request', ret, Date.now());
     }
 
     destroyCarrier() {
         console.log("destroyCarrier");
-        if (myCarrier) {
-            myCarrier.destroy();
-            myCarrier = null;
+        if (carrierObj) {
+            carrierObj.destroy();
+            carrierObj = null;
         }
     }
 
@@ -193,34 +192,34 @@ export class CarrierManager {
     createObject(success, error) {
         // if CarrierManager.opts is null, then use default config. (udpEnabled = true)
         this.carrierPlugin.createObject(
+            CarrierManager.opts, this.callbacks,
             (ret) => {this.successFun(ret, success);},
-            (err) => {this.errorFun(err, error);},
-            CarrierManager.opts, this.callbacks);
+            (err) => {this.errorFun(err, error);});
     }
 
     isValidAddress(address, success, error) {
         this.carrierPlugin.isValidAddress(
+            address,
             (ret) => {this.successFun(ret, success);},
-            (err) => {this.errorFun(err, error);},
-            address);
+            (err) => {this.errorFun(err, error);});
     }
 
     getUserId() {
         if (this.platform.is("desktop")) { //for test
             return "deafultUserId";
         }
-        return myCarrier.userId;
+        return carrierObj.userId;
     }
 
     getAddress(): string {
         if (this.platform.is("desktop")) { //for test
             return "EXfdeeeeeeeeeeeeeeeeeee";
         }
-        return myCarrier.address;
+        return carrierObj.address;
     }
 
     getFriends(success, error) {
-        myCarrier.getFriends(
+        carrierObj.getFriends(
             (ret) => {this.successFun(ret, success);},
             (err) => {this.errorFun(err, error);});
     }
@@ -236,27 +235,27 @@ export class CarrierManager {
             return;
         }
 
-        myCarrier.addFriend(
+        carrierObj.addFriend(
+            address, hello,
             (ret) => {this.successFun(ret, success);},
-            (err) => {this.errorFun(err, error);},
-            address, hello);
+            (err) => {this.errorFun(err, error);});
     }
 
     acceptFriend(userId, success, error) {
-        myCarrier.acceptFriend(
+        carrierObj.acceptFriend(
+            userId,
             (ret) => {this.successFun(ret, success);},
-            (err) => {this.errorFun(err, error);},
-            userId);
+            (err) => {this.errorFun(err, error);});
     }
 
     removeFriend(userId, success, error) {
         if (this.platform.is("desktop")) { //for test
             return success("ok");
         }
-        myCarrier.removeFriend(
+        carrierObj.removeFriend(
+            userId,
             (ret) => {this.successFun(ret, success);},
-            (err) => {this.errorFun(err, error);},
-            userId);
+            (err) => {this.errorFun(err, error);});
     }
 
     sendMessage(chatMessage, success, error) {
@@ -269,15 +268,15 @@ export class CarrierManager {
         }
 
         let id = chatMessage.messageId;
-        myCarrier.sendFriendMessage(
+        carrierObj.sendFriendMessage(
+            chatMessage.toUserId, chatMessage.message,
             (ret) => {
                 let index = this.getMsgIndexById(id);
                 if (index !== -1) {
                     messageList[index].status = 'success';
                 }
                 this.successFun(ret, success);},
-            (err) => {this.errorFun(err, error);},
-            chatMessage.toUserId, chatMessage.message);
+            (err) => {this.errorFun(err, error);});
     }
 
     successFun(ret, okFun = null) {

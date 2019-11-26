@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Platform } from '@ionic/angular';
 import { Native } from '../../../services/Native';
-import { CarrierManager } from '../../../services/CarrierManager';
+import { CarrierService } from '../../../services/CarrierService';
 
 @Component({
     selector: 'app-addfriend',
@@ -19,7 +19,7 @@ export class AddFriendPage {
             private route: ActivatedRoute,
             private platform: Platform,
             private native: Native,
-            private carrierManager: CarrierManager) {
+            private carrierService: CarrierService) {
         this.route.queryParams.subscribe((data) => {
             this.address = data["address"];
         });
@@ -28,27 +28,25 @@ export class AddFriendPage {
     addFriend() {
         console.log("AddFriend:" + this.address);
         if (this.platform.is("desktop")) { //for test
-            this.carrierManager.addFriend(this.address, "Hello",
-                (data) => {
+            this.carrierService.addFriend(this.address, "Hello",
+                () => {
                     console.log("AddFriend success");
                     this.native.setRootRouter("/tabs");
                 },
                 null);
-        }
-        else {
-            this.carrierManager.isValidAddress(this.address,
+        } else {
+            this.carrierService.isValidAddress(this.address,
             (data) => {
                 if (data) {
-                    this.carrierManager.addFriend(this.address, this.friendRequest,
-                        (data) => {
+                    this.carrierService.addFriend(this.address, this.friendRequest,
+                        () => {
                             console.log("AddFriend success");
                             this.native.setRootRouter("/tabs");
                         },
                         (err) => {
                             console.log("AddFriend error: " + err);
                         });
-                }
-                else {
+                } else {
                     this.native.toast("address error!");
                 }
             },

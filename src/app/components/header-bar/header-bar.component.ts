@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AppService } from '../../services/AppService';
-import { CarrierManager } from '../../services/CarrierManager';
+import { CarrierService } from '../../services/CarrierService';
 
 @Component({
     selector: 'header-bar',
@@ -16,7 +16,7 @@ export class HeaderBarComponent implements OnInit {
         this._title = title;
     }
 
-    constructor(public appService: AppService, public carrierManager: CarrierManager) { }
+    constructor(public appService: AppService, public carrierService: CarrierService) { }
 
     ngOnInit() { }
 
@@ -26,7 +26,7 @@ export class HeaderBarComponent implements OnInit {
 
     close() {
         console.log("close");
-        this.carrierManager.destroyCarrier();
+        this.carrierService.destroyCarrier();
         this.appService.close();
     }
 }

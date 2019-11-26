@@ -22,7 +22,7 @@ import { en } from './../assets/i18n/en';
 
 import { Native } from './services/Native';
 import { Logger } from './services/Logger';
-import { CarrierManager } from "./services/CarrierManager";
+import { CarrierService } from './services/CarrierService';
 import { PopupProvider } from './services/popup';
 
 /** 通过类引用方式解析国家化文件 */
@@ -62,7 +62,7 @@ export function TranslateLoaderFactory() {
         StatusBar,
         SplashScreen,
         QRScanner,
-        CarrierManager,
+        CarrierService,
         Clipboard,
         Native,
         Logger,

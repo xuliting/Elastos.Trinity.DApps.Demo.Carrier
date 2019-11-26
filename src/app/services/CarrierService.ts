@@ -35,22 +35,22 @@ export class ChatMessage {
     status: string;
 }
 
-declare let carrierPlugin: any;
-let carrierObj = null;
+declare let carrierManager: CarrierPlugin.CarrierManager;
+let carrierObj: CarrierPlugin.Carrier;
+
 let eventObj = null;
 let messageList: ChatMessage[] = [];
 
 @Injectable()
-export class CarrierManager {
+export class CarrierService {
 
-    private static sIsReady = false;
-    private myInterval: any; //for test
-    private carrierPlugin;
-
-    private opts = {
+    private static opts = {
         udpEnabled: true,
         persistentLocation: ".data"
     };
+    private static sIsReady = false;
+    private myInterval: any; //for test
+    // private carrierManager;
 
     private callbacks = {
         onConnection: this.connection_callback,
@@ -79,16 +79,16 @@ export class CarrierManager {
                 clearInterval(this.myInterval);
             }, 2000);
         } else {
-            this.carrierPlugin = carrierPlugin;
             this.createObject(this.CarrierCreateSuccess, null);
         }
     }
 
     isReady() {
-        return CarrierManager.sIsReady;
+        return CarrierService.sIsReady;
     }
 
     CarrierCreateSuccess(ret) {
+        console.log("CarrierService CarrierCreateSuccess：", ret);
         carrierObj = ret;
         carrierObj.start(50, null, null);
     }
@@ -101,7 +101,7 @@ export class CarrierManager {
 
     ready_callback(ret) {
         console.log("ready_callback");
-        CarrierManager.sIsReady = true;
+        CarrierService.sIsReady = true;
         eventObj.publish('carrier:ready', ret, Date.now());
     }
 
@@ -190,17 +190,18 @@ export class CarrierManager {
     //------------------------------------------------------------
 
     createObject(success, error) {
-        // if CarrierManager.opts is null, then use default config. (udpEnabled = true)
-        this.carrierPlugin.createObject(
-            CarrierManager.opts, this.callbacks,
-            (ret) => {this.successFun(ret, success);},
+        console.log("CarrierService createObject");
+        // if CarrierService.opts is null, then use default config. (udpEnabled = true)
+        carrierManager.createObject(
+            this.callbacks, CarrierService.opts,
+            (ret) => {success(ret);},
             (err) => {this.errorFun(err, error);});
     }
 
     isValidAddress(address, success, error) {
-        this.carrierPlugin.isValidAddress(
+        carrierManager.isValidAddress(
             address,
-            (ret) => {this.successFun(ret, success);},
+            (ret) => {success(ret);},
             (err) => {this.errorFun(err, error);});
     }
 
@@ -220,14 +221,14 @@ export class CarrierManager {
 
     getFriends(success, error) {
         carrierObj.getFriends(
-            (ret) => {this.successFun(ret, success);},
+            (ret) => {success(ret);},
             (err) => {this.errorFun(err, error);});
     }
 
 
     addFriend(address, hello, success, error) {
         if (this.platform.is("desktop")) { // for test
-            this.successFun("", success);
+            success();
             this.myInterval = setInterval(() => {
                 this.friend_added_callback(null);
                 clearInterval(this.myInterval);
@@ -237,14 +238,14 @@ export class CarrierManager {
 
         carrierObj.addFriend(
             address, hello,
-            (ret) => {this.successFun(ret, success);},
+            () => {success();},
             (err) => {this.errorFun(err, error);});
     }
 
     acceptFriend(userId, success, error) {
         carrierObj.acceptFriend(
             userId,
-            (ret) => {this.successFun(ret, success);},
+            () => {success();},
             (err) => {this.errorFun(err, error);});
     }
 
@@ -254,7 +255,7 @@ export class CarrierManager {
         }
         carrierObj.removeFriend(
             userId,
-            (ret) => {this.successFun(ret, success);},
+            () => {success();},
             (err) => {this.errorFun(err, error);});
     }
 
@@ -263,26 +264,20 @@ export class CarrierManager {
         messageList.push(chatMessage);
 
         if (this.platform.is("desktop")) {//for test
-            this.successFun("", success);
+            success();
             return;
         }
 
         let id = chatMessage.messageId;
         carrierObj.sendFriendMessage(
             chatMessage.toUserId, chatMessage.message,
-            (ret) => {
+            () => {
                 let index = this.getMsgIndexById(id);
                 if (index !== -1) {
                     messageList[index].status = 'success';
                 }
-                this.successFun(ret, success);},
+                success();},
             (err) => {this.errorFun(err, error);});
-    }
-
-    successFun(ret, okFun = null) {
-        if (okFun != null) {
-            return okFun(ret);
-        }
     }
 
     errorFun(err, errorFun = null) {

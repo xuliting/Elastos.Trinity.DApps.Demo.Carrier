@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ModalController, Events } from '@ionic/angular';
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
 import { Native } from '../../services/Native';
 import { PopupProvider } from '../../services/popup';
@@ -13,14 +12,12 @@ import { PopupProvider } from '../../services/popup';
 export class ScanPage implements OnInit {
     light: boolean;
     frontCamera: boolean;
-    isShow: boolean = false;
+    isShow = false;
     pageType: string;
 
     constructor(
             private route: ActivatedRoute,
             private qrScanner: QRScanner,
-            private modalCtrl: ModalController,
-            private events: Events,
             private popupProvider: PopupProvider,
             private native: Native) {
         this.light = false;
@@ -45,12 +42,14 @@ export class ScanPage implements OnInit {
                 this.qrScanner.show();
                 // wait for user to scan something,then the observable callback will be called
             } else if (status.denied) {
-                this.popupProvider.ionicAlert("error", "permission was permanently denied, check authorized plugin!");
+                this.popupProvider.ionicAlert("error",
+                        "permission was permanently denied, check authorized plugin!");
                 // camera permission was permanently denied
                 // you must use QRScanner.openSettings() method to guide the user to the settings page
                 // then they can grant the permission from there
             } else {
-                this.popupProvider.ionicAlert("erro", "permission was denied, but not permanently. You can ask for permission again at a later time!");
+                this.popupProvider.ionicAlert("erro",
+                        "permission was denied, but not permanently. You can ask for permission again at a later time!");
             }
         }).catch((e: any) => {
             console.log('Error is', e);
@@ -78,8 +77,9 @@ export class ScanPage implements OnInit {
     }
 
     toggleCamera() {
-        if (this.frontCamera) { this.qrScanner.useBackCamera(); }
-        else {
+        if (this.frontCamera) {
+            this.qrScanner.useBackCamera();
+        } else {
             this.qrScanner.useFrontCamera();
         }
         this.frontCamera = !this.frontCamera;

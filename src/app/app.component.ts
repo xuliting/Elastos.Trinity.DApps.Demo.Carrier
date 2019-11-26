@@ -7,7 +7,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { TranslateService } from '@ngx-translate/core';
 
 import { AppService } from './services/AppService';
-import { CarrierManager } from './services/CarrierManager';
+import { CarrierService } from './services/CarrierService';
 import { Native } from './services/Native';
 
 @Component({
@@ -23,7 +23,7 @@ export class AppComponent {
             private translate: TranslateService,
             private native: Native,
             private router: Router,
-            private carrierManager: CarrierManager,
+            private carrierManager: CarrierService,
             private appService: AppService
     ) {
         this.initializeApp();

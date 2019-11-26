@@ -1,7 +1,7 @@
 import { Component, NgZone } from '@angular/core';
 import { Events, Platform } from '@ionic/angular';
 import { Native } from '../../services/Native';
-import { CarrierManager } from '../../services/CarrierManager';
+import { CarrierService } from '../../services/CarrierService';
 import { PopupProvider } from '../../services/popup';
 
 @Component({
@@ -21,7 +21,7 @@ export class FriendsPage {
             private zone: NgZone,
             private popupProvider: PopupProvider,
             private native: Native,
-            private carrierManager: CarrierManager) {
+            private carrierService: CarrierService) {
     }
 
     ngOnInit() {
@@ -34,7 +34,7 @@ export class FriendsPage {
 
         this.event.subscribe('carrier:friend_connection', msg => {
             console.log("carrier:friend_connection friendId:" + msg.friendId + "  status:" + msg.status);
-            let index = this.getFriendIndexById(msg.friendId);
+            const index = this.getFriendIndexById(msg.friendId);
             if (index !== -1) {
                 this.zone.run(() => {
                     this.friendList[index].status = msg.status;
@@ -49,14 +49,13 @@ export class FriendsPage {
                     userId: "100",
                     name: "New Contact",
                     status: 1
-                }
-            }
-            else {
+                };
+            } else {
                 friend = {
                     userId: msg.friendInfo.userInfo.userId,
                     name: msg.friendInfo.userInfo.name,
                     status: msg.friendInfo.status
-                }
+                };
             }
             console.log("carrier:friend_added: " + friend.userId + " status:" + msg.friendInfo.status);
             this.zone.run(() => {
@@ -71,11 +70,11 @@ export class FriendsPage {
 
         this.event.subscribe('carrier:friend_request', msg => {
             console.log("friend_request :" + msg.userId + " with:" + msg.hello);
-            let message = "From: " + msg.userId + "\r\n with:" + msg.hello;
+            const message = "From: " + msg.userId + "\r\n with:" + msg.hello;
             this.popupProvider.ionicConfirm("Friend Request", message, "Yes", "NO").then((data) => {
                 if (data) {
-                    this.carrierManager.acceptFriend(msg.userId,
-                        (data) => {
+                    this.carrierService.acceptFriend(msg.userId,
+                        () => {
                             console.log("AddFriend success");
                             this.native.setRootRouter("/tabs");
                         },
@@ -86,7 +85,7 @@ export class FriendsPage {
     }
 
     ngOnDestroy() {
-        this.carrierManager.destroyCarrier();
+        this.carrierService.destroyCarrier();
     }
 
     ionViewDidEnter() {
@@ -109,9 +108,9 @@ export class FriendsPage {
             return;
         }
 
-        this.carrierManager.getFriends((data) => {
+        this.carrierService.getFriends((data) => {
             console.log("friends.getFriends:" + data);
-            var friends = data.friends;
+            let friends = data.friends;
             if (typeof friends == "string") {
                 friends = JSON.parse(friends);
             }
@@ -148,13 +147,13 @@ export class FriendsPage {
 
     deleteFriend(userId) {
         console.log("friends.page deleteFriend");
-        this.carrierManager.removeFriend(userId, (data) => {
+        this.carrierService.removeFriend(userId, (data) => {
             console.log("removeFriend success:" + userId);
         },
         null);
 
         for (let i = 0; i < this.friendList.length; i++) {
-            if (this.friendList[i].userId == userId) {
+            if (this.friendList[i].userId === userId) {
                 this.friendList.splice(i, 1);
                 break;
            }
@@ -162,7 +161,6 @@ export class FriendsPage {
     }
 
     getFriendIndexById(id: string) {
-        return this.friendList.findIndex(e => e.userId === id)
+        return this.friendList.findIndex(e => e.userId === id);
     }
-
 }

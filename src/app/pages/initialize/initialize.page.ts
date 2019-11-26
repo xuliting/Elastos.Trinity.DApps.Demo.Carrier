@@ -1,7 +1,7 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { Events } from '@ionic/angular';
 import { Native } from '../../services/Native';
-import { CarrierManager } from '../../services/CarrierManager';
+import { CarrierService } from '../../services/CarrierService';
 
 @Component({
     selector: 'app-initialize',
@@ -13,7 +13,7 @@ export class InitializePage implements OnInit {
             private native: Native,
             private events: Events,
             private zone: NgZone,
-            private carrierManager: CarrierManager) {
+            private carrierService: CarrierService) {
     }
 
     ngOnInit() {
@@ -23,7 +23,7 @@ export class InitializePage implements OnInit {
     }
 
     initializeApp() {
-        if (this.carrierManager.isReady()) {
+        if (this.carrierService.isReady()) {
             this.native.hideLoading();
             this.native.setRootRouter("/tabs");
             return;

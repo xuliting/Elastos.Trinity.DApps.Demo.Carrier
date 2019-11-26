@@ -3,8 +3,8 @@ import { Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { Native } from './Native';
 
-declare let appManager: any;
-let myService = null;
+declare let appManager: AppManagerPlugin.AppManager;
+let appManagerObj = null;
 
 enum MessageType {
     INTERNAL = 1,
@@ -33,7 +33,7 @@ export class AppService {
             private translate: TranslateService,
             private platform: Platform,
             private native: Native) {
-        myService = this;
+        appManagerObj = this;
 
         var me = this;
     }
@@ -46,20 +46,14 @@ export class AppService {
         this.getLanguage();
     }
 
-    print_err(err) {
-        console.log("ElastosJS  Error: " + err);
-    }
-
     getLanguage() {
         var me = this;
         appManager.getLocale(
-            ret => {
-                console.log(ret);
-                me.setCurLang(ret.currentLang);
-                me.setDefaultLang(ret.defaultLang);
+            (currentLang, systemLang) => {
+                me.setCurLang(currentLang);
+                me.setDefaultLang(systemLang);
                 // me.setting.setSystemLang(ret.systemLang);
-            },
-            err => me.print_err(err)
+            }
         );
     }
 
@@ -82,10 +76,6 @@ export class AppService {
         appManager.launcher();
     }
 
-    start(id: string) {
-        appManager.start(id);
-    }
-
     close() {
         appManager.close();
     }
@@ -101,7 +91,7 @@ export class AppService {
             case MessageType.IN_REFRESH:
                 switch (params.action) {
                     case "currentLocaleChanged":
-                        myService.setCurLang(params.code);
+                        appManagerObj.setCurLang(params.code);
                         break;
                 }
                 break;

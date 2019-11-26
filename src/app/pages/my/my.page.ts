@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CarrierManager } from '../../services/CarrierManager';
+import { CarrierService } from '../../services/CarrierService';
 
 @Component({
     selector: 'app-my',
@@ -8,11 +8,11 @@ import { CarrierManager } from '../../services/CarrierManager';
 })
 export class MyPage {
 
-    qrcode: string = "";
+    qrcode = '';
 
-    constructor(public carrierManager: CarrierManager) {}
+    constructor(public carrierService: CarrierService) {}
 
     ngOnInit() {
-        this.qrcode = this.carrierManager.getAddress();
+        this.qrcode = this.carrierService.getAddress();
     }
 }

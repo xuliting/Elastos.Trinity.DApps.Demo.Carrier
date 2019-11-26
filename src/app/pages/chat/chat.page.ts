@@ -2,7 +2,7 @@ import { Component, NgZone } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Events, Platform } from '@ionic/angular';
 import { PopupProvider } from '../../services/popup';
-import { CarrierManager, ChatMessage } from '../../services/CarrierManager';
+import { CarrierService, ChatMessage } from '../../services/CarrierService';
 import { Native } from '../../services/Native';
 
 @Component({
@@ -22,13 +22,13 @@ export class ChatPage {
             private event: Events,
             private zone: NgZone,
             private platform: Platform,
-            private carrierManager: CarrierManager,
+            private carrierService: CarrierService,
             private popupProvider: PopupProvider,
             private native: Native) {
         this.route.queryParams.subscribe((data) => {
             this.friendId = data.userId;
             this.status = data.status;
-            this.myId = this.carrierManager.getUserId();
+            this.myId = this.carrierService.getUserId();
             console.log("friendId:" + this.friendId);
         });
     }
@@ -71,7 +71,7 @@ export class ChatPage {
     }
 
     init() {
-        this.msgList = this.carrierManager.getMessageByUserId(this.friendId);
+        this.msgList = this.carrierService.getMessageByUserId(this.friendId);
 
         if (this.platform.is("desktop")) { //for test
             let newMsg: ChatMessage = {
@@ -106,7 +106,7 @@ export class ChatPage {
 
         this.pushMessage(newMsg);
 
-        this.carrierManager.sendMessage(newMsg,
+        this.carrierService.sendMessage(newMsg,
             (data) => {
                 console.log("sendFriendMessage success");
                 let index = this.getMsgIndexById(id);
@@ -148,7 +148,7 @@ export class ChatPage {
     }
 
     getTime(time): string {
-        var date = new Date();
+        const date = new Date();
         date.setTime(time);
         return date.toLocaleTimeString();
     }

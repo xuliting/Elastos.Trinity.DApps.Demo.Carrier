@@ -44,12 +44,13 @@ let messageList: ChatMessage[] = [];
 @Injectable()
 export class CarrierService {
 
+    private static sIsReady = false;
+    private myInterval: any; //for test
+
     private static opts = {
         udpEnabled: true,
         persistentLocation: ".data"
     };
-    private static sIsReady = false;
-    private myInterval: any; //for test
     // private carrierManager;
 
     private callbacks = {

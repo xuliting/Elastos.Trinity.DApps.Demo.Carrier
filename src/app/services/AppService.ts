@@ -5,6 +5,7 @@ import { Native } from './Native';
 
 declare let appManager: AppManagerPlugin.AppManager;
 let appManagerObj = null;
+declare let carrierManager: CarrierPlugin.CarrierManager;
 
 enum MessageType {
     INTERNAL = 1,
@@ -36,6 +37,13 @@ export class AppService {
         appManagerObj = this;
 
         var me = this;
+
+        let carrier: CarrierPlugin.Carrier;
+        carrierManager.createObject({
+            onFriendMessage: (carrier: CarrierPlugin.Carrier)=>{
+
+            }
+        })
     }
 
     init() {
@@ -49,9 +57,9 @@ export class AppService {
     getLanguage() {
         var me = this;
         appManager.getLocale(
-            (currentLang, systemLang) => {
-                me.setCurLang(currentLang);
-                me.setDefaultLang(systemLang);
+            (currLang, defLang) => {
+                me.setCurLang(currLang);
+                me.setDefaultLang(defLang);
                 // me.setting.setSystemLang(ret.systemLang);
             }
         );
@@ -74,6 +82,10 @@ export class AppService {
 
     launcher() {
         appManager.launcher();
+    }
+
+    start(id: string) {
+        appManager.start(id, ()=>{});
     }
 
     close() {

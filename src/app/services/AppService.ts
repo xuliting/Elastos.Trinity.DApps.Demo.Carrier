@@ -5,7 +5,6 @@ import { Native } from './Native';
 
 declare let appManager: AppManagerPlugin.AppManager;
 let appManagerObj = null;
-declare let carrierManager: CarrierPlugin.CarrierManager;
 
 enum MessageType {
     INTERNAL = 1,
@@ -37,13 +36,6 @@ export class AppService {
         appManagerObj = this;
 
         var me = this;
-
-        let carrier: CarrierPlugin.Carrier;
-        carrierManager.createObject({
-            onFriendMessage: (carrier: CarrierPlugin.Carrier)=>{
-
-            }
-        })
     }
 
     init() {

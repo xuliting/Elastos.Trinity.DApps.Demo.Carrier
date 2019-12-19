@@ -31,7 +31,6 @@ import { Router } from '@angular/router';
 
 @Injectable()
 export class Native {
-    private mnemonicLang: string = "english";
     private loadingIsOpen: boolean = false;
 
     constructor(public toastCtrl: ToastController,
@@ -77,14 +76,6 @@ export class Native {
 
     public setRootRouter(router) {
         this.navCtrl.navigateRoot(router);
-    }
-
-    public getMnemonicLang(): string {
-        return this.mnemonicLang;
-    }
-
-    public setMnemonicLang(lang) {
-        this.mnemonicLang = lang;
     }
 
     public clone(myObj) {

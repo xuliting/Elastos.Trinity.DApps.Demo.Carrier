@@ -49,27 +49,20 @@ export class AppService {
     getLanguage() {
         var me = this;
         appManager.getLocale(
-            (currLang, defLang) => {
-                me.setCurLang(currLang);
-                me.setDefaultLang(defLang);
-                // me.setting.setSystemLang(ret.systemLang);
+            (defaultLang, currentLang, systemLang) => {
+                console.log('defaultLang', defaultLang, ' currentLang:', currentLang, ' systemLang:', systemLang);
+                me.setCurLang(currentLang);
+                me.setDefaultLang(defaultLang);
             }
         );
     }
 
     setDefaultLang(lang: string) {
-        // ToDo
+        // TODO
     }
 
     setCurLang(lang: string) {
-        this.translate.use(lang);
-        if (lang == 'en') {
-            this.native.setMnemonicLang("english");
-        } else if (lang == "zh") {
-            this.native.setMnemonicLang("chinese");
-        } else {
-            this.native.setMnemonicLang("english");
-        }
+        //TODO
     }
 
     launcher() {

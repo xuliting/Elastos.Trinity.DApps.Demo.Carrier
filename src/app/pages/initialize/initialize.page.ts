@@ -3,6 +3,8 @@ import { Events } from '@ionic/angular';
 import { Native } from '../../services/Native';
 import { CarrierService } from '../../services/CarrierService';
 
+declare let appManager: AppManagerPlugin.AppManager;
+
 @Component({
     selector: 'app-initialize',
     templateUrl: './initialize.page.html',
@@ -20,6 +22,10 @@ export class InitializePage implements OnInit {
         this.native.showLoading("Connecting to carrier").then(() => {
             this.initializeApp();
         });
+    }
+
+    ionViewDidEnter() {
+        appManager.setVisible("show", ()=>{}, (err)=>{});
     }
 
     initializeApp() {

@@ -9,7 +9,6 @@ const routes: Routes = [
     { path: 'tabs', loadChildren: './pages/tabs/tabs.module#TabsPageModule' },
     { path: '', loadChildren: './pages/tabs/tabs.module#TabsPageModule' },
     { path: 'chat', loadChildren: './pages/chat/chat.module#ChatPageModule' },
-    { path: 'scan', loadChildren: './pages/scan/scan.module#ScanPageModule' },
     { path: 'my', loadChildren: './pages/my/my.module#MyPageModule' },
 ];
 @NgModule({

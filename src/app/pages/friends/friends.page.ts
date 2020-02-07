@@ -3,6 +3,7 @@ import { Events, Platform } from '@ionic/angular';
 import { Native } from '../../services/Native';
 import { CarrierService } from '../../services/CarrierService';
 import { PopupProvider } from '../../services/popup';
+import { AppService } from 'src/app/services/AppService';
 
 @Component({
     selector: 'app-friends',
@@ -21,6 +22,7 @@ export class FriendsPage {
             private zone: NgZone,
             private popupProvider: PopupProvider,
             private native: Native,
+            private appService: AppService,
             private carrierService: CarrierService) {
     }
 
@@ -133,7 +135,7 @@ export class FriendsPage {
     }
 
     scanCode() {
-        this.native.go("/scan", null);
+        this.appService.scanAddress();
     }
 
     itemSelected(item) {

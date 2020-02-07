@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Platform } from '@ionic/angular';
 import { Native } from '../../../services/Native';
+import { AppService } from '../../../services/AppService';
 import { CarrierService } from '../../../services/CarrierService';
 
 @Component({
@@ -19,6 +20,7 @@ export class AddFriendPage {
             private route: ActivatedRoute,
             private platform: Platform,
             private native: Native,
+            private appService: AppService,
             private carrierService: CarrierService) {
         this.route.queryParams.subscribe((data) => {
             this.address = data["address"];
@@ -55,7 +57,7 @@ export class AddFriendPage {
     }
 
     scanCode() {
-        this.native.go("/scan", null);
+        this.appService.scanAddress();
     }
 
 }

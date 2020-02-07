@@ -104,8 +104,7 @@ export class Native {
         if (!this.loadingIsOpen) {
             this.loadingIsOpen = true;
             let loading = await this.loadingCtrl.create({
-                message: content,
-                duration: 10000//30s
+                message: content
             });
             return await loading.present();
         }

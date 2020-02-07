@@ -14,6 +14,8 @@ import { Observable } from 'rxjs';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { ComponentsModule } from './components/components.module';
+import { LoadingComponent } from 'src/app/components/loading/loading.component';
 
 import { zh } from './../assets/i18n/zh';
 import { en } from './../assets/i18n/en';
@@ -49,8 +51,7 @@ export function TranslateLoaderFactory() {
 
 @NgModule({
     declarations: [AppComponent],
-    entryComponents: [],
-    imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,
+    imports: [BrowserModule, ComponentsModule, IonicModule.forRoot(), AppRoutingModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
@@ -69,6 +70,10 @@ export function TranslateLoaderFactory() {
         PopupProvider,
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
     ],
-    bootstrap: [AppComponent]
+    bootstrap: [AppComponent],
+    entryComponents: [
+        AppComponent,
+        LoadingComponent
+    ]
 })
 export class AppModule {}

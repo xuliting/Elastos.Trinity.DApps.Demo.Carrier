@@ -21,24 +21,19 @@
  */
 
 import { Injectable } from '@angular/core';
-import { ToastController, LoadingController, NavController } from '@ionic/angular';
+import { Router } from '@angular/router';
+import { ToastController, NavController } from '@ionic/angular';
 import { Clipboard } from '@ionic-native/clipboard/ngx';
 import { TranslateService } from '@ngx-translate/core';
-// import { HttpService } from "../services/HttpService";
-import { Logger } from "../services/Logger";
-import { Router } from '@angular/router';
-
+import { Logger } from '../services/Logger';
 
 @Injectable()
 export class Native {
-    private loadingIsOpen: boolean = false;
-
     constructor(public toastCtrl: ToastController,
-            private clipboard: Clipboard,
-            public translate: TranslateService,
-            private loadingCtrl: LoadingController,
-            private navCtrl: NavController,
-            private router: Router) {
+                private clipboard: Clipboard,
+                public translate: TranslateService,
+                private navCtrl: NavController,
+                private router: Router) {
     }
 
     public info(message) {
@@ -95,28 +90,6 @@ export class Native {
 
         return myNewObj;
     }
-
-    /**
-     * loading
-     * @param content
-     */
-    public async showLoading(content: string = '') {
-        if (!this.loadingIsOpen) {
-            this.loadingIsOpen = true;
-            let loading = await this.loadingCtrl.create({
-                message: content
-            });
-            return await loading.present();
-        }
-    };
-
-    /**
-     * close loading
-     */
-    public hideLoading(): void {
-        this.loadingIsOpen && this.loadingCtrl.dismiss();
-        this.loadingIsOpen = false;
-    };
 
     public getTimestamp() {
         return new Date().getTime().toString();

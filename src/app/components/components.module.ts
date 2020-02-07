@@ -5,10 +5,11 @@ import { FormsModule } from '@angular/forms';
 import { QRCodeModule } from 'angularx-qrcode';
 import { TranslateModule } from '@ngx-translate/core';
 import { HeaderBarComponent } from './header-bar/header-bar.component';
-import { MyQrcodeComponent } from './my-qrcode/my-qrcode.component'
+import { LoadingComponent } from './loading/loading.component';
+import { MyQrcodeComponent } from './my-qrcode/my-qrcode.component';
 
 @NgModule({
-    declarations: [HeaderBarComponent, MyQrcodeComponent],
+    declarations: [HeaderBarComponent, LoadingComponent, MyQrcodeComponent],
     imports: [
         CommonModule,
         FormsModule,
@@ -16,7 +17,7 @@ import { MyQrcodeComponent } from './my-qrcode/my-qrcode.component'
         QRCodeModule,
         TranslateModule,
     ],
-    exports: [HeaderBarComponent, MyQrcodeComponent],
+    exports: [HeaderBarComponent, LoadingComponent, MyQrcodeComponent],
     providers: [
     ],
     entryComponents: [],

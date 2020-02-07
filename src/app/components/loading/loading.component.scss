@@ -1,0 +1,30 @@
+#loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: fixed;
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+
+    -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
+    -moz-animation: fadein 2s; /* Firefox < 16 */
+     -ms-animation: fadein 2s; /* Internet Explorer */
+      -o-animation: fadein 2s; /* Opera < 12.1 */
+         animation: fadein 2s;
+
+    ion-spinner {
+        color: black;
+    }
+
+    p {
+        margin-left: 20px;
+        margin-right: 20px;
+        color: black;
+        font-size: 24px;
+    }
+
+
+}

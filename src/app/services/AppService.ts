@@ -62,7 +62,7 @@ export class AppService {
     }
 
     setCurLang(lang: string) {
-        //TODO
+        this.translate.use(lang);
     }
 
     launcher() {

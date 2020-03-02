@@ -27,6 +27,12 @@ export class FriendsPage {
     }
 
     ngOnInit() {
+        // TODO: in ios, ionViewDidEnter will execute before carrier:ready ?
+        this.event.subscribe('carrier:ready', msg => {
+            console.log("carrier:ready");
+            this.init();
+        });
+
         this.event.subscribe('carrier:connectionchanged', msg => {
             console.log("carrier:connectionchanged");
             this.zone.run(() => {
@@ -117,15 +123,17 @@ export class FriendsPage {
                 friends = JSON.parse(friends);
             }
 
-            for (var id in friends) {
-                let friend = {
-                    userId: friends[id].userInfo.userId,
-                    name: friends[id].userInfo.name,
-                    status: friends[id].status
-                }
+            this.zone.run(() => {
+                for (var id in friends) {
+                    let friend = {
+                        userId: friends[id].userInfo.userId,
+                        name: friends[id].userInfo.name,
+                        status: friends[id].status
+                    }
 
-                this.friendList.push(friend);
-            }
+                    this.friendList.push(friend);
+                }
+            });
         },
         null);
     }
@@ -156,7 +164,9 @@ export class FriendsPage {
 
         for (let i = 0; i < this.friendList.length; i++) {
             if (this.friendList[i].userId === userId) {
-                this.friendList.splice(i, 1);
+                this.zone.run(() => {
+                    this.friendList.splice(i, 1);
+                });
                 break;
            }
         }

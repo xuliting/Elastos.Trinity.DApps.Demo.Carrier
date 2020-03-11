@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-    { path: '', redirectTo: 'tabs', pathMatch: 'full' },
     { path: 'initialize', loadChildren: './pages/initialize/initialize.module#InitializePageModule' },
     { path: 'friends', loadChildren: './pages/friends/friends.module#FriendsPageModule' },
     { path: 'addfriend', loadChildren: './pages/friends/addfriend/addfriend.module#AddFriendPageModule' },

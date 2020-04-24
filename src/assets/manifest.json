@@ -1,7 +1,7 @@
 {
     "id": "org.elastos.trinity.dapp.carrierdemo",
-    "version": "1.1.0",
-    "version_code": 4,
+    "version": "1.1.1",
+    "version_code": 5,
     "name": "Carrier Demo",
     "short_name": "Carrier Demo",
     "description": "This is a simple demo dApp for the Elastos Carrier networking module.",
@@ -16,9 +16,9 @@
         }
     ],
     "author": {
-        "name": "Elastos Foundation",
-        "email": "contact@elastos.org",
-        "website": "https://www.elastos.org"
+        "name": "Trinity Tech Co., Ltd.",
+        "email": "contact@trinity-tech.io",
+        "website": "https://www.trinity-tech.io"
     },
     "default_locale": "en",
     "plugins": [

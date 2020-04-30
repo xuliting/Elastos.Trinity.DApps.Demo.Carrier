@@ -5,6 +5,7 @@ import { Native } from '../../services/Native';
 import { CarrierService } from '../../services/CarrierService';
 
 declare let appManager: AppManagerPlugin.AppManager;
+declare let titleBarManager: TitleBarPlugin.TitleBarManager;
 
 @Component({
     selector: 'app-initialize',
@@ -21,9 +22,10 @@ export class InitializePage implements OnInit {
     }
 
     ngOnInit() {
-        this.showLoading('Connecting to carrier').then(() => {
+       /*  this.showLoading('Connecting to Carrier').then(() => {
             this.initializeApp();
-        });
+        }); */
+        this.native.setRootRouter('/tabs');
     }
 
     async showLoading(message) {
@@ -33,7 +35,7 @@ export class InitializePage implements OnInit {
                 message
             },
             backdropDismiss: false,
-            cssClass: 'loading-modal'
+            // cssClass: 'loading-modal'
         });
         loading.onDidDismiss().then((params) => {
             console.log('onDidDismiss');
@@ -46,8 +48,15 @@ export class InitializePage implements OnInit {
         this.modalCtrl.dismiss();
     }
 
+    ionViewWillEnter() {
+        titleBarManager.setTitle("Carrier Demo");
+        titleBarManager.setBackgroundColor("#181d20");
+        titleBarManager.setForegroundMode(TitleBarPlugin.TitleBarForegroundMode.LIGHT);
+        titleBarManager.setNavigationMode(TitleBarPlugin.TitleBarNavigationMode.HOME);
+    }
+
     ionViewDidEnter() {
-        appManager.setVisible("show", ()=>{}, (err)=>{});
+        appManager.setVisible("show", () => {}, (err) => {});
     }
 
     initializeApp() {

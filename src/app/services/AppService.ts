@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { Platform } from '@ionic/angular';
+import { Injectable, NgZone } from '@angular/core';
+import { Platform, NavController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { Native } from './Native';
 
@@ -32,7 +32,10 @@ export class AppService {
     constructor(
             private translate: TranslateService,
             private platform: Platform,
-            private native: Native) {
+            private native: Native,
+            private navCtrl: NavController,
+            private zone: NgZone
+    ) {
         appManagerObj = this;
 
         var me = this;
@@ -77,11 +80,15 @@ export class AppService {
         appManager.close();
     }
 
-    onReceive(ret) {
-        console.log("ElastosJS  HomePage receive message:" + ret.message + ". type: " + ret.type + ". from: " + ret.from);
+    onReceive = (ret) => {
+        console.log('onReceive', ret);
         var params: any = ret.message;
         if (typeof (params) == "string") {
-            params = JSON.parse(params);
+            try {
+                params = JSON.parse(params);
+            } catch (e) {
+                console.log('Params are not JSON format: ', params);
+            }
         }
         console.log(params);
         switch (ret.type) {
@@ -89,6 +96,16 @@ export class AppService {
                 switch (params.action) {
                     case "currentLocaleChanged":
                         appManagerObj.setCurLang(params.code);
+                        break;
+                }
+                break;
+            case MessageType.INTERNAL:
+                switch (ret.message) {
+                    case 'navback':
+                        this.zone.run(() => {
+                            console.log('navback');
+                            this.navCtrl.back();
+                        });
                         break;
                 }
                 break;

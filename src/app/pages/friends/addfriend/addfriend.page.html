@@ -1,20 +1,13 @@
-
-<ion-header>
-    <header-bar title="Add"></header-bar>
-</ion-header>
-
 <ion-content>
-  <ion-toolbar>
-    <ion-buttons slot="end">
-        <ion-button  fill="clear" (click)="scanCode()">
-            <ion-icon name='qr-scanner'> </ion-icon>
-        </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-
-  <ion-input required type="text" placeholder="Enter Address" [(ngModel)]="address" value="address"> </ion-input>
-  <ion-label >Send Friend request: </ion-label>
-  <ion-input required type="text" placeholder="Hello" [(ngModel)]="friendRequest" > </ion-input>
-  <ion-button expand="block" (click)="addFriend()">Add Friend</ion-button>
-
+  <div class="container ion-padding">
+    <ion-grid class="ion-padding">
+      <h5>Add Friend Address: </h5>
+      <ion-input required type="text" placeholder="Enter Address" [(ngModel)]="address" value="address"> </ion-input>
+      <h5>Add Friend Message: </h5>
+      <ion-input required type="text" placeholder="Hello" [(ngModel)]="friendRequest" > </ion-input>
+      <ion-button color="secondary" (click)="addFriend()">
+        <ion-label>Send Friend Request</ion-label>
+      </ion-button>
+    </ion-grid>
+  </div>
 </ion-content>

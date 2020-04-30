@@ -5,6 +5,8 @@ import { CarrierService } from '../../services/CarrierService';
 import { PopupProvider } from '../../services/popup';
 import { AppService } from 'src/app/services/AppService';
 
+declare let titleBarManager: TitleBarPlugin.TitleBarManager;
+
 @Component({
     selector: 'app-friends',
     templateUrl: 'friends.page.html',
@@ -94,6 +96,9 @@ export class FriendsPage {
 
     ngOnDestroy() {
         this.carrierService.destroyCarrier();
+    }
+
+    ionViewWillEnter() {
     }
 
     ionViewDidEnter() {

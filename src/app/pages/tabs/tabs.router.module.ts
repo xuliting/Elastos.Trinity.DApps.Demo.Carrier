@@ -18,6 +18,16 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'addfriend',
+        children: [
+          {
+            path: '',
+            loadChildren: () =>
+              import('../friends/addfriend/addfriend.module').then(m => m.AddFriendPageModule)
+          }
+        ]
+      },
+      {
         path: 'my',
         children: [
           {

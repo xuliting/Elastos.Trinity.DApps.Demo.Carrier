@@ -5,6 +5,8 @@ import { Native } from '../../../services/Native';
 import { AppService } from '../../../services/AppService';
 import { CarrierService } from '../../../services/CarrierService';
 
+declare let titleBarManager: TitleBarPlugin.TitleBarManager;
+
 @Component({
     selector: 'app-addfriend',
     templateUrl: 'addfriend.page.html',
@@ -25,6 +27,10 @@ export class AddFriendPage {
         this.route.queryParams.subscribe((data) => {
             this.address = data["address"];
         });
+    }
+
+    ionViewWillEnter() {
+        titleBarManager.setNavigationMode(TitleBarPlugin.TitleBarNavigationMode.BACK);
     }
 
     addFriend() {

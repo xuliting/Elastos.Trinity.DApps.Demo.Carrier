@@ -8,7 +8,7 @@
     align-items: center;
 
     ion-label {
-      color: #21313d;
+      color: #203755;
       font-weight: 800;
       font-size: 24px;
     }
@@ -42,10 +42,10 @@
 
   ion-list {
     padding: 0;
-    border-top: 0.5px solid #09203f;
+    border-top: 0.75px solid #203755;
 
     ion-item-sliding {
-      border-bottom: 0.5px solid #09203f;
+      border-bottom: 0.75px solid #203755;
 
       ion-item {
         --padding-start: 0px;
@@ -54,21 +54,22 @@
         ion-avatar {
           ion-icon {
             font-size: 40px;
-            color:#537895
+            color: #203755;
           }
         }
   
         ion-label {
-          padding-left: 10px;
+          padding-left: 20px;
   
           h2 {
-            font-size: 16px;
+            margin: 0;
+            font-size: 15px;
             font-weight: 600;
-            color: #09203f;
+            color: #203755;
           }
   
           ion-note {
-            font-size: 12px;
+            font-size: 10px;
             font-weight: 500;
           }
           

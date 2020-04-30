@@ -10,7 +10,7 @@
     "start_visible": "hide",
     "icons": [
         {
-            "src": "assets/images/logo.png",
+            "src": "assets/images/logo.svg",
             "sizes": "120X120",
             "type": "image/png"
         }

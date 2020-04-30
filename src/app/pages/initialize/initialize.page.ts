@@ -22,10 +22,10 @@ export class InitializePage implements OnInit {
     }
 
     ngOnInit() {
-       /*  this.showLoading('Connecting to Carrier').then(() => {
+        this.showLoading('Connecting to Carrier').then(() => {
             this.initializeApp();
-        }); */
-        this.native.setRootRouter('/tabs');
+        });
+        // this.native.setRootRouter('/tabs');
     }
 
     async showLoading(message) {
@@ -50,7 +50,8 @@ export class InitializePage implements OnInit {
 
     ionViewWillEnter() {
         titleBarManager.setTitle("Carrier Demo");
-        titleBarManager.setForegroundMode(TitleBarPlugin.TitleBarForegroundMode.DARK);
+        titleBarManager.setBackgroundColor("#203755");
+        titleBarManager.setForegroundMode(TitleBarPlugin.TitleBarForegroundMode.LIGHT);
         titleBarManager.setNavigationMode(TitleBarPlugin.TitleBarNavigationMode.HOME);
     }
 

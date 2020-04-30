@@ -99,6 +99,7 @@ export class FriendsPage {
     }
 
     ionViewWillEnter() {
+        titleBarManager.setNavigationMode(TitleBarPlugin.TitleBarNavigationMode.HOME);
     }
 
     ionViewDidEnter() {

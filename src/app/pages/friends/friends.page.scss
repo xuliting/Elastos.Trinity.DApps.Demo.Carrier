@@ -1,6 +1,5 @@
 .container {
   min-height: 100%;
-  background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
 
   ion-grid {
     display: flex;
@@ -42,7 +41,50 @@
   }
 
   ion-list {
-    background: transparent;
+    padding: 0;
+    border-top: 0.5px solid #09203f;
+
+    ion-item-sliding {
+      border-bottom: 0.5px solid #09203f;
+
+      ion-item {
+        --padding-start: 0px;
+        --inner-padding-end: 0px;
+  
+        ion-avatar {
+          ion-icon {
+            font-size: 40px;
+            color:#537895
+          }
+        }
+  
+        ion-label {
+          padding-left: 10px;
+  
+          h2 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #09203f;
+          }
+  
+          ion-note {
+            font-size: 12px;
+            font-weight: 500;
+          }
+          
+        }
+      }
+  
+      ion-item-option {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+  
+        ion-icon {
+          font-size: 20px;
+        }
+      }
+    }
   }
 }
 

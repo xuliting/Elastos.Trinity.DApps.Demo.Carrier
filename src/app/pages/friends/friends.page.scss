@@ -8,7 +8,6 @@
     align-items: center;
 
     ion-label {
-      color: #203755;
       font-weight: 800;
       font-size: 24px;
     }
@@ -42,10 +41,10 @@
 
   ion-list {
     padding: 0;
-    border-top: 0.75px solid #203755;
+    border-top: 0.75px solid #21313d;
 
     ion-item-sliding {
-      border-bottom: 0.75px solid #203755;
+      border-bottom: 0.75px solid #21313d;
 
       ion-item {
         --padding-start: 0px;
@@ -54,7 +53,7 @@
         ion-avatar {
           ion-icon {
             font-size: 40px;
-            color: #203755;
+            color: #21313d;
           }
         }
   
@@ -65,7 +64,6 @@
             margin: 0;
             font-size: 15px;
             font-weight: 600;
-            color: #203755;
           }
   
           ion-note {

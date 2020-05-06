@@ -6,11 +6,11 @@
     "short_name": "Carrier Demo",
     "description": "This is a simple demo dApp for the Elastos Carrier networking module.",
     "start_url": "index.html",
-    "category": "communication",
+    "category": "techdemo",
     "start_visible": "hide",
     "icons": [
         {
-            "src": "assets/images/logo.svg",
+            "src": "assets/images/logo.png",
             "sizes": "120X120",
             "type": "image/png"
         }

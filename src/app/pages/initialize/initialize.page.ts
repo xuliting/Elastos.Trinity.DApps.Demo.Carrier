@@ -50,7 +50,7 @@ export class InitializePage implements OnInit {
 
     ionViewWillEnter() {
         titleBarManager.setTitle("Carrier Demo");
-        titleBarManager.setBackgroundColor("#203755");
+        titleBarManager.setBackgroundColor("#181d20");
         titleBarManager.setForegroundMode(TitleBarPlugin.TitleBarForegroundMode.LIGHT);
         titleBarManager.setNavigationMode(TitleBarPlugin.TitleBarNavigationMode.HOME);
     }

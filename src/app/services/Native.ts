@@ -42,9 +42,11 @@ export class Native {
 
     public toast(_message: string = 'Operation completed', duration: number = 2000): void {
         this.toastCtrl.create({
+            header: 'There was an error..',
             message: _message,
             duration: 2000,
-            position: 'top'
+            color: 'primary',
+            position: 'bottom'
         }).then(toast => toast.present());
     }
 
@@ -53,7 +55,8 @@ export class Native {
         this.toastCtrl.create({
             message: _message,
             duration: 2000,
-            position: 'middle'
+            color: 'primary',
+            position: 'bottom'
         }).then(toast => toast.present());
     }
 

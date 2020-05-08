@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController, NavParams } from '@ionic/angular';
 
+declare let appManager: AppManagerPlugin.AppManager;
 
 @Component({
     selector: 'loading',
@@ -15,6 +16,10 @@ export class LoadingComponent implements OnInit {
     }
 
     ngOnInit() {
+    }
+
+    ionViewDidEnter() {
+        appManager.setVisible("show", () => {}, (err) => {});
     }
 
     hideModal() {

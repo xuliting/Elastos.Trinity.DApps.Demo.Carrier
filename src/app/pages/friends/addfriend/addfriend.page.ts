@@ -46,6 +46,7 @@ export class AddFriendPage {
             this.carrierService.isValidAddress(this.address,
             (data) => {
                 if (data) {
+                    console.log('Address is valid');
                     this.carrierService.addFriend(this.address, this.friendRequest,
                         () => {
                             console.log("AddFriend success");
@@ -53,9 +54,10 @@ export class AddFriendPage {
                         },
                         (err) => {
                             console.log("AddFriend error: " + err);
+                            this.native.toast(err);
                         });
                 } else {
-                    this.native.toast("address error!");
+                    this.native.toast("Please check your address");
                 }
             },
             null);

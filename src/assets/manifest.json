@@ -1,7 +1,7 @@
 {
     "id": "org.elastos.trinity.dapp.carrierdemo",
     "version": "1.1.2",
-    "version_code": 6,
+    "version_code": 7,
     "name": "Carrier Demo",
     "short_name": "Carrier Demo",
     "description": "This is a simple demo dApp for the Elastos Carrier networking module.",

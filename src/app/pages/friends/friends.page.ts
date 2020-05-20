@@ -99,10 +99,8 @@ export class FriendsPage {
     }
 
     ionViewWillEnter() {
+        titleBarManager.setTitle("Carrier Demo");
         titleBarManager.setNavigationMode(TitleBarPlugin.TitleBarNavigationMode.HOME);
-    }
-
-    ionViewDidEnter() {
         this.init();
     }
 
@@ -123,11 +121,12 @@ export class FriendsPage {
         }
 
         this.carrierService.getFriends((data) => {
-            console.log("friends.getFriends:" + data);
             let friends = data.friends;
-            if (typeof friends == "string") {
+            if (typeof friends === 'string') {
                 friends = JSON.parse(friends);
             }
+
+            console.log('friends.getFriends:' + friends);
 
             this.zone.run(() => {
                 for (var id in friends) {

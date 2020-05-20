@@ -1,9 +1,10 @@
 import { Component, NgZone } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Events, Platform } from '@ionic/angular';
-import { PopupProvider } from '../../services/popup';
+import { AppService } from '../../services/AppService';
 import { CarrierService, ChatMessage } from '../../services/CarrierService';
-import { Native } from '../../services/Native';
+
+declare let titleBarManager: TitleBarPlugin.TitleBarManager;
 
 @Component({
     selector: 'app-chat',
@@ -22,9 +23,8 @@ export class ChatPage {
             private event: Events,
             private zone: NgZone,
             private platform: Platform,
-            private carrierService: CarrierService,
-            private popupProvider: PopupProvider,
-            private native: Native) {
+            private appService: AppService,
+            private carrierService: CarrierService) {
         this.route.queryParams.subscribe((data) => {
             this.friendId = data.userId;
             this.status = data.status;
@@ -65,9 +65,14 @@ export class ChatPage {
         });
     }
 
-    ionViewDidEnter() {
-        console.log("chat.page ionViewDidEnter");
+    ionViewWillEnter() {
         this.init();
+        titleBarManager.setTitle("Chat");
+        this.appService.setTitleBarBackKeyShown(true);
+    }
+
+    ionViewWillLeave() {
+        this.appService.setTitleBarBackKeyShown(false);
     }
 
     init() {

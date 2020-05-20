@@ -4,6 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Native } from './Native';
 
 declare let appManager: AppManagerPlugin.AppManager;
+declare let titleBarManager: TitleBarPlugin.TitleBarManager;
 let appManagerObj = null;
 
 enum MessageType {
@@ -37,8 +38,6 @@ export class AppService {
             private zone: NgZone
     ) {
         appManagerObj = this;
-
-        var me = this;
     }
 
     init() {
@@ -46,11 +45,28 @@ export class AppService {
 
         console.log("AppService init");
         appManager.setListener(this.onReceive);
+        titleBarManager.setOnItemClickedListener((menuIcon)=>{
+          if (menuIcon.key == "back") {
+              this.navCtrl.back();
+          }
+        });
         this.getLanguage();
     }
 
+    setTitleBarBackKeyShown(show: boolean) {
+      if (show) {
+          titleBarManager.setIcon(TitleBarPlugin.TitleBarIconSlot.INNER_LEFT, {
+              key: "back",
+              iconPath: TitleBarPlugin.BuiltInIcon.BACK
+          });
+      }
+      else {
+          titleBarManager.setIcon(TitleBarPlugin.TitleBarIconSlot.INNER_LEFT, null);
+      }
+    }
+
     getLanguage() {
-        var me = this;
+        const me = this;
         appManager.getLocale(
             (defaultLang, currentLang, systemLang) => {
                 console.log('defaultLang', defaultLang, ' currentLang:', currentLang, ' systemLang:', systemLang);
@@ -83,7 +99,7 @@ export class AppService {
     onReceive = (ret) => {
         console.log('onReceive', ret);
         var params: any = ret.message;
-        if (typeof (params) == "string") {
+        if (typeof (params) === 'string') {
             try {
                 params = JSON.parse(params);
             } catch (e) {
@@ -94,18 +110,8 @@ export class AppService {
         switch (ret.type) {
             case MessageType.IN_REFRESH:
                 switch (params.action) {
-                    case "currentLocaleChanged":
+                    case 'currentLocaleChanged':
                         appManagerObj.setCurLang(params.code);
-                        break;
-                }
-                break;
-            case MessageType.INTERNAL:
-                switch (ret.message) {
-                    case 'navback':
-                        this.zone.run(() => {
-                            console.log('navback');
-                            this.navCtrl.back();
-                        });
                         break;
                 }
                 break;
@@ -115,9 +121,9 @@ export class AppService {
     }
 
     scanAddress() {
-        appManager.sendIntent("scanqrcode", {}, {}, (res) => {
-            console.log("Got scan result:", res.result.scannedContent);
-            this.native.go("/addfriend", {"address": res.result.scannedContent});
+        appManager.sendIntent('scanqrcode', {}, {}, (res) => {
+            console.log('Got scan result:', res.result.scannedContent);
+            this.native.go('/addfriend', {'address': res.result.scannedContent});
         }, (err: any) => {
             console.error(err);
         });

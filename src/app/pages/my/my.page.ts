@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { CarrierService } from '../../services/CarrierService';
 
+declare let titleBarManager: TitleBarPlugin.TitleBarManager;
+
 @Component({
     selector: 'app-my',
     templateUrl: 'my.page.html',
@@ -14,5 +16,9 @@ export class MyPage {
 
     ngOnInit() {
         this.qrcode = this.carrierService.getAddress();
+    }
+
+    ionViewWillEnter() {
+      titleBarManager.setTitle("Address");
     }
 }

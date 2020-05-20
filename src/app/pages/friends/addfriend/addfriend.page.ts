@@ -30,7 +30,12 @@ export class AddFriendPage {
     }
 
     ionViewWillEnter() {
-        titleBarManager.setNavigationMode(TitleBarPlugin.TitleBarNavigationMode.BACK);
+      titleBarManager.setTitle("Add Contact");
+        this.appService.setTitleBarBackKeyShown(true);
+    }
+
+    ionViewWillLeave() {
+        this.appService.setTitleBarBackKeyShown(false);
     }
 
     addFriend() {

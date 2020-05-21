@@ -45,7 +45,7 @@ export class AppService {
 
         console.log("AppService init");
         appManager.setListener(this.onReceive);
-        titleBarManager.setOnItemClickedListener((menuIcon)=>{
+        titleBarManager.addOnItemClickedListener((menuIcon)=>{
           if (menuIcon.key == "back") {
               this.navCtrl.back();
           }

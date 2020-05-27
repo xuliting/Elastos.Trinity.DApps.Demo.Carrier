@@ -36,7 +36,8 @@ export class ChatMessage {
 }
 
 declare let carrierManager: CarrierPlugin.CarrierManager;
-let carrierObj: CarrierPlugin.Carrier;
+// let carrierObj: CarrierPlugin.Carrier;
+let carrierObj: any;
 
 let eventObj = null;
 let messageList: ChatMessage[] = [];
@@ -64,7 +65,8 @@ export class CarrierService {
         onFriendRequest: this.friend_request_callback,
         onFriendAdded: this.friend_added_callback,
         onFriendRemoved: this.friend_removed_callback,
-        onFriendMessage: this.message_callback,
+        onFriendMessage: this.friend_message_callback,
+        onFriendMessageWithReceipt: this.friend_message_with_receipt_callback,
         onFriendInviteRequest: this.invite_request_callback,
         onSessionRequest: this.session_request_callback,
     }
@@ -146,8 +148,10 @@ export class CarrierService {
         eventObj.publish('carrier:friend_removed', ret, Date.now());
     }
 
-    message_callback(ret) {
-        console.log("message_callback");
+    friend_message_callback(ret) {
+        console.log("friend_message_callback:", ret);
+        var msgTimestamp = Date.parse(ret.timestamp);
+
         eventObj.publish('carrier:message', ret, Date.now());
 
         let newMsg: ChatMessage = {
@@ -155,11 +159,15 @@ export class CarrierService {
             userId: ret.from,
             userAvatar: './assets/images/avatar.png',
             toUserId: carrierObj.userId,
-            time: Date.now(),
+            time: msgTimestamp,
             message: ret.message,
             status: 'success'
         };
         messageList.push(newMsg);
+    }
+
+    friend_message_with_receipt_callback(ret) {
+      console.log("friend_message_with_receipt_callback:", ret);
     }
 
     invite_request_callback(ret) {
@@ -277,9 +285,34 @@ export class CarrierService {
                 if (index !== -1) {
                     messageList[index].status = 'success';
                 }
-                success();},
-            (err) => {this.errorFun(err, error);});
+                success();
+            },
+            (err) => {this.errorFun(err, error);}
+          );
     }
+
+    sendMessageWithReceipt(chatMessage, success, error) {
+      console.log("sendmessage: to:" + chatMessage.toUserId + " message:" + chatMessage.message);
+      messageList.push(chatMessage);
+
+      if (this.platform.is("desktop")) {//for test
+          success();
+          return;
+      }
+
+      let id = chatMessage.messageId;
+      carrierObj.sendFriendMessageWithReceipt(
+          chatMessage.toUserId, chatMessage.message, this.friend_message_with_receipt_callback,
+          () => {
+              let index = this.getMsgIndexById(id);
+              if (index !== -1) {
+                  messageList[index].status = 'success';
+              }
+              success();
+          },
+          (err) => {this.errorFun(err, error);}
+        );
+  }
 
     errorFun(err, errorFun = null) {
         this.native.info("errorFun:" + err);

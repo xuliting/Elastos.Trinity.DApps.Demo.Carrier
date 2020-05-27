@@ -52,7 +52,7 @@ export class ChatPage {
                     userId: msg.from,
                     userAvatar: './assets/images/avatar.png',
                     toUserId: this.myId,
-                    time: Date.now(),
+                    time: msg.time,
                     message: msg.message,
                     status: 'success'
                 };
@@ -111,7 +111,7 @@ export class ChatPage {
 
         this.pushMessage(newMsg);
 
-        this.carrierService.sendMessage(newMsg,
+        this.carrierService.sendMessageWithReceipt(newMsg,
             (data) => {
                 console.log("sendFriendMessage success");
                 let index = this.getMsgIndexById(id);

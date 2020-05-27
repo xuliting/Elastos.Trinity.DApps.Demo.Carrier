@@ -67,10 +67,13 @@ export class FriendsPage {
                     status: msg.friendInfo.status
                 };
             }
-            console.log("carrier:friend_added: " + friend.userId + " status:" + msg.friendInfo.status);
-            this.zone.run(() => {
-                this.friendList.push(friend);
-            });
+            const index = this.getFriendIndexById(friend.userId);
+            if (index === -1) {
+              console.log("carrier:friend_added: " + friend.userId + " status:" + msg.friendInfo.status);
+              this.zone.run(() => {
+                  this.friendList.push(friend);
+              });
+            }
         });
 
         this.event.subscribe('carrier:friend_removed', msg => {
